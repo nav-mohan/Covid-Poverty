@@ -11,16 +11,6 @@ body {
 	font-family: 'Open Sans', sans-serif;
 }
 
-/* choose a light or dark theme to add to the body tag. */
-.dark-theme {
-    background-color: #151515;
-    color: #fbfbfb;
-}
-.light-theme {
-    background-color: white;
-    color: black;
-}
-
 .header , .footer {
 	padding-top:20px;
 	padding-bottom:20px;
@@ -37,7 +27,6 @@ body {
 	margin:auto;
 	max-width: 80%;
 }
-
 
 /* text styles */
 
@@ -100,17 +89,12 @@ p.notes {
 	font-size:0.85rem;
 }
 
-.boundary-layer {
-	stroke:#aaa;
-	stroke-width:0.5px;
-	vector-effect:non-scaling-stroke;
-}
-
 .title {
+	text-align: right;
     font-size: 18px;
     fill: #A8A5A4;
     font-weight: 600;
-    font-family: Arial
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
 }
 
 .bartext{
@@ -170,18 +154,6 @@ svg{
 
 @media only screen and (min-width: 500px)
 	{	
-	#chart-1{
-		position: relative;
-		display: block;
-		max-width: 100%;
-		left:0%;
-	}
-	#chart-2{
-		position: relative;
-		display: block;
-		max-width: 100%;
-		left:0%;
-	}
 	.image-lead{
 		position: relative;
 		display: block;
@@ -197,18 +169,6 @@ svg{
 }
 
 @media only screen and (min-width: 700px){
-	#chart-1{
-		position: relative;
-		display: block;
-		max-width: 100%;
-		left:0%;
-	}
-	#chart-2{
-		position: relative;
-		display: block;
-		max-width: 100%;
-		left:0%;
-	}
 	.image-lead{
 		position: relative;
 		display: block;
@@ -225,20 +185,6 @@ svg{
 }
 
 @media only screen and (min-width: 1200px){
-	#chart-1{
-		position: relative;
-		display: inline-block;
-		width: 48%;
-		left:0%;
-		margin:0;
-	}
-	#chart-2{
-		position: relative;
-		display: inline-block;
-		width: 48%;
-		left:0%;
-		margin:0;
-	}
 	.image-lead{
 		position: relative;
 		display: block;
