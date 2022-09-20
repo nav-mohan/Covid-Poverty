@@ -1,7 +1,7 @@
 var url_IncomeCasesData = "IncomeCases.json"
 
 
-var margin = {top:10, bottom:10, left:10, right:10}
+var margin = {top:30, bottom:30, left:10, right:50}
 var viewboxwidth = 500;
 var viewboxheight = 400
 var width = viewboxwidth - margin.left - margin.right;
@@ -14,7 +14,7 @@ var svg = d3.select("#chart")
     .append("svg")
     .attr("viewBox", "0 0 "+ viewboxwidth +" "+ viewboxheight)
     .append("g")
-    .attr("transform", "translate(" + 40+ "," + 0 + ")"); 
+    .attr("transform", "translate(" + 40+ "," + 20 + ")"); 
 
 var tooltip = d3.tip()
     .attr("class", "tooltip")
@@ -28,6 +28,19 @@ svg.append("text")
     .attr("x",width-330)
     .attr("y",30)
     .text("Corellation between cases and income");
+
+svg.append('text')
+    .attr('class','x-axis-title')
+    .attr('x',margin.left)
+    .attr('y',height+margin.top)
+    .text('Average Income ($CAD)')
+svg.append('text')
+    .attr('class','y-axis-title')
+    .attr('x',margin.left)
+    .attr('y',height/2)
+    .attr("text-anchor", "end")
+    .attr("transform", "rotate(-90)")
+    .text('Total Cases')
 
 // Import Dataset
 d3.queue()
@@ -65,7 +78,26 @@ function plotScatter (error, data){
     .append("circle")
       .attr("cx", function (d) { return x(d.properties.AVG_INC); } )
       .attr("cy", function (d) { return y(d.properties.Cases); } )
-      .attr("r", 1.5)
+      .attr("r", 4)
       .style("fill", "#69b3a2")
-      .on('mouseover',function(d){console.log(d)})
+      .attr("zIndex", 10)
+      .style("stroke","white")
+      .style("stroke-width",1)
+      .style("opacity",0.5)
+      .on('mouseover',function(d){
+        d3.select(this)
+            .style('fill','#5858FA')
+            .style("opacity",0.8)
+
+        tooltip.show(d,this)
+    })
+      .on('mouseout',function(d){
+        d3.select(this)
+            .style('fill','#69b3a2')
+            .style("opacity",0.5)
+
+        tooltip.hide(d,this);
+    })
+
+  
 }

@@ -113,6 +113,7 @@ p.notes {
 
 svg{
 	background:#FFF1ED;
+	z-index: 0;
 }
 
 #charts{
@@ -128,6 +129,7 @@ svg{
   border-radius: 4px;
   font-size: 12px;
   pointer-events: none;
+  z-index:1;
 }
 
 /* Creates a small triangle extender for the tooltip */
