@@ -108,6 +108,7 @@ function plotScatter (error, data){
 
 
 
+var boundaryLayer = svg.append("g").classed("boundary-layer",true);
 
 // Import Dataset
 d3.queue()
@@ -117,8 +118,8 @@ d3.queue()
 // Establish Map Porjection
 var projMerc = d3.geoMercator()
     .center([-79.35, 43.73])
-    .translate([width/2,height/2])
-    .scale(50000);
+    .translate([0.7*width,0.3*height])
+    .scale(30000);
 
 var path = d3.geoPath().projection(projMerc);
 
