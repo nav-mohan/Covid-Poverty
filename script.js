@@ -134,5 +134,10 @@ function plotMaps (error, data){
         .data(incomeCases)
         .enter().append("path")
         .attr("d",path)
-
+        .attr('id',(d)=>{return(d.properties.AREA_NAME.replace(/[\W]/g,'-'))})
+        .on('mouseover',hoverMap)
 };
+
+function hoverMap(d,i){
+    d3.select('#'+d.attr('id'))
+}
