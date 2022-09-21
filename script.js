@@ -29,18 +29,22 @@ svg.append("text")
     .attr("y",30)
     .text("Corellation between cases and income");
 
-svg.append('text')
-    .attr('class','x-axis-title')
-    .attr('x',margin.left)
-    .attr('y',height+margin.top)
-    .text('Average Income ($CAD)')
-svg.append('text')
-    .attr('class','y-axis-title')
-    .attr('x',margin.left)
-    .attr('y',height/2)
-    .attr("text-anchor", "end")
+svg.append("text")             
+    .attr("class","axis-title")
+    .attr("transform",
+          "translate(" + (width/2) + " ," + 
+                         (height + margin.top) + ")")
+    .style("text-anchor", "middle")
+    .text("Average Neighbourhood Income in 2016 ($CAD)");
+
+  svg.append("text")
+    .attr("class","axis-title")
     .attr("transform", "rotate(-90)")
-    .text('Total Cases')
+    .attr("y", -34)
+    .attr("x",0 - (height / 2))
+    .attr("dy", "1em")
+    .style("text-anchor", "middle")
+    .text("Total Cases");
 
 // Import Dataset
 d3.queue()

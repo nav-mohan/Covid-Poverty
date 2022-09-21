@@ -201,3 +201,14 @@ svg{
 		left:10%;
 	}
 }
+
+
+.axis-title{
+	font-size: 8px;
+	font-weight: 600;
+	fill: grey;
+}
+
+.tick>text{
+	font-size: 7px;
+}
