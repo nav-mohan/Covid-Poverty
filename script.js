@@ -23,12 +23,6 @@ var tooltip = d3.tip()
 
 svg.call(tooltip);
 
-svg.append("text")
-    .attr("class","title")
-    .attr("x",width-330)
-    .attr("y",30)
-    .text("Corellation between cases and income");
-
 svg.append("text")             
     .attr("class","axis-title")
     .attr("transform",
@@ -80,33 +74,43 @@ function plotScatter (error, data){
     .data(incomeCases)
     .enter()
     .append("circle")
-      .attr("cx", function (d) { return x(d.properties.AVG_INC); } )
-      .attr("cy", function (d) { return y(d.properties.Cases); } )
-      .attr("r", 4)
-      .style("fill", "#69b3a2")
-      .attr("zIndex", 10)
-      .style("stroke","white")
-      .style("stroke-width",1)
-      .style("opacity",0.5)
-      .on('mouseover',function(d){
-        d3.select(this)
-            .style('fill','#5858FA')
-            .style("opacity",0.8)
-
-        tooltip.show(d,this)
-    })
-      .on('mouseout',function(d){
-        d3.select(this)
-            .style('fill','#69b3a2')
-            .style("opacity",0.5)
-
-        tooltip.hide(d,this);
-    })
+    .attr('id',(d)=>{return('scatter-'+d.properties.AREA_NAME.replace(/[\W]/g,'-'))})
+    .attr("cx", function (d) { return x(d.properties.AVG_INC); } )
+    .attr("cy", function (d) { return y(d.properties.Cases); } )
+    .attr("r", 4)
+    .style("fill", "#69b3a2")
+    .attr("zIndex", 10)
+    .style("stroke","white")
+    .style("stroke-width",1)
+    .style("opacity",0.5)
+    .on('mouseover',mouseOverScatter)
+    .on('mouseout',mouseOutScatter)
 
   
 }
 
 
+function mouseOverScatter(d){
+    d3.select(this)
+    .style('fill','#5858FA')
+    .style("opacity",0.8)
+
+    tooltip.show(d,this)
+    
+    d3.select("#boundary-"+d.properties.AREA_NAME.replace(/[\W]/g,'-'))
+        .style('fill','#5858FA')
+}
+function mouseOutScatter(d){
+    d3.select(this)
+    .style('fill','#69b3a2')
+    .style("opacity",0.5)
+
+    tooltip.hide(d,this);
+
+    d3.select("#boundary-"+d.properties.AREA_NAME.replace(/[\W]/g,'-'))
+        .style("fill", "#69b3a2")
+
+}
 
 var boundaryLayer = svg.append("g").classed("boundary-layer",true);
 
@@ -125,19 +129,32 @@ var path = d3.geoPath().projection(projMerc);
 
 // Plot Maps 
 function plotMaps (error, data){
-
-    console.log(data.features)
-
     var incomeCases = data.features;
 
     boundaryLayer.selectAll("path")
         .data(incomeCases)
         .enter().append("path")
         .attr("d",path)
-        .attr('id',(d)=>{return(d.properties.AREA_NAME.replace(/[\W]/g,'-'))})
-        .on('mouseover',hoverMap)
+        .attr('id',(d)=>{return('boundary-'+d.properties.AREA_NAME.replace(/[\W]/g,'-'))})
+        .style("fill", "#69b3a2")
+        .style('stroke','white')
+        .style('stroke-width',0.5)
+        .on('mouseover',mouseOverMap)
+        .on('mouseout', mouseOutMap)
 };
 
-function hoverMap(d,i){
-    d3.select('#'+d.attr('id'))
+function mouseOverMap(d){
+    d3.select(this)
+    .style('fill','#5858FA')
+
+    d3.select("#scatter-"+d.properties.AREA_NAME.replace(/[\W]/g,'-'))
+        .style('fill','#5858FA')
+}
+function mouseOutMap(d){
+    d3.select(this)
+    .style("fill", "#69b3a2")
+    
+    d3.select("#scatter-"+d.properties.AREA_NAME.replace(/[\W]/g,'-'))
+        .style("fill", "#69b3a2")
+
 }

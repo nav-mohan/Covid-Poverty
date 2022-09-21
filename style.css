@@ -212,3 +212,9 @@ svg{
 .tick>text{
 	font-size: 7px;
 }
+
+#graph-title{
+	text-align: center;
+	font-size: 0.8em;
+}
+
