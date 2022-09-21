@@ -105,3 +105,33 @@ function plotScatter (error, data){
 
   
 }
+
+
+
+
+// Import Dataset
+d3.queue()
+    .defer(d3.json,url_IncomeCasesData)
+    .await(plotMaps)
+
+// Establish Map Porjection
+var projMerc = d3.geoMercator()
+    .center([-79.35, 43.73])
+    .translate([width/2,height/2])
+    .scale(50000);
+
+var path = d3.geoPath().projection(projMerc);
+
+// Plot Maps 
+function plotMaps (error, data){
+
+    console.log(data.features)
+
+    var incomeCases = data.features;
+
+    boundaryLayer.selectAll("path")
+        .data(incomeCases)
+        .enter().append("path")
+        .attr("d",path)
+
+};
