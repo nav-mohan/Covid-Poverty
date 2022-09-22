@@ -43,12 +43,14 @@ d3.queue()
     .defer(d3.json,url_IncomeCasesData)
     .await(plotScatter)
 
-// Plot Maps 
 function plotScatter (error, data){
 
     var incomeCases = data.features;
+    const min_income = d3.min(incomeCases.map(function(e){return e.properties.AVG_INC}))
     const max_income = d3.max(incomeCases.map(function(e){return e.properties.AVG_INC}))
+    const min_cases = d3.min(incomeCases.map(function(e){return e.properties.Cases}))
     const max_cases = d3.max(incomeCases.map(function(e){return e.properties.Cases}))
+    const min_cases_percapita = d3.min(incomeCases.map(function(e){return 10000*(e.properties.Cases/e.properties.Population)}))
     const max_cases_percapita = d3.max(incomeCases.map(function(e){return 10000*(e.properties.Cases/e.properties.Population)}))
 
     var x = d3.scaleLinear()
@@ -88,7 +90,6 @@ function plotScatter (error, data){
   
 }
 
-
 function mouseOverScatter(d){
     d3.select(this)
     .style('fill','#5858FA')
@@ -119,23 +120,39 @@ d3.queue()
     .await(plotMaps)
 
 // Establish Map Porjection
+const $trans_x = 0.55*width;
+const $trans_y = 0.5*height;
+const $scale = 53000;
 var projMerc = d3.geoMercator()
     .center([-79.35, 43.73])
-    .translate([0.7*width,0.3*height])
-    .scale(30000);
-
+    .translate([$trans_x,$trans_y])
+    .scale($scale);
 var path = d3.geoPath().projection(projMerc);
 
 // Plot Maps 
 function plotMaps (error, data){
     var incomeCases = data.features;
+    const min_income = d3.min(incomeCases.map(function(e){return e.properties.AVG_INC}))
+    const max_income = d3.max(incomeCases.map(function(e){return e.properties.AVG_INC}))
+    const min_cases = d3.min(incomeCases.map(function(e){return e.properties.Cases}))
+    const max_cases = d3.max(incomeCases.map(function(e){return e.properties.Cases}))
+    const min_cases_percapita = d3.min(incomeCases.map(function(e){return 10000*(e.properties.Cases/e.properties.Population)}))
+    const max_cases_percapita = d3.max(incomeCases.map(function(e){return 10000*(e.properties.Cases/e.properties.Population)}))
+
+    var boundaryColor = d3.scaleLinear()
+        .domain([0,20])
+        .clamp(true)
+        .range(["#fff","#0B61AB"]);
+
+    boundaryColor.domain([0,max_income])
+    // boundaryColor.domain([0,max_cases_percapita])
 
     boundaryLayer.selectAll("path")
         .data(incomeCases)
         .enter().append("path")
         .attr("d",path)
         .attr('id',(d)=>{return('boundary-'+d.properties.AREA_NAME.replace(/[\W]/g,'-'))})
-        .style("fill", "#69b3a2")
+        .style("fill", (d,i)=>boundaryColor(d.properties.AVG_INC))
         .style('stroke','white')
         .style('stroke-width',0.5)
         .on('mouseover',mouseOverMap)
