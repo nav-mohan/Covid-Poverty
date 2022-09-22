@@ -1,0 +1,72 @@
+
+svg{
+	background:#FFF1ED;
+	z-index: 0;
+}
+
+#chart{
+	padding-top: 20px;
+	padding-bottom: 20px;
+    margin: 0 auto 0 auto;
+}
+
+
+@media only screen and (min-width: 500px){
+    #chart{max-width: 100%;}
+}
+
+@media only screen and (min-width: 700px){
+    #chart{max-width: 70%;}
+}
+
+@media only screen and (min-width: 1200px){
+    #chart{max-width: 60%;}
+}
+
+
+.tooltip {
+  line-height: 1.2;
+  padding: 6px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 4px;
+  font-size: 12px;
+  pointer-events: none;
+  z-index:1;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.tooltip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips specifically */
+.tooltip.n:after {
+  margin: -2px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+
+.axis-title{
+	font-size: 8px;
+	font-weight: 600;
+	fill: grey;
+}
+
+.tick>text{
+	font-size: 7px;
+}
+
+#graph-title{
+	text-align: center;
+	font-size: 0.8em;
+}
+

@@ -38,7 +38,7 @@ svg.append("text")
     .attr("x",0 - (height / 2))
     .attr("dy", "1em")
     .style("text-anchor", "middle")
-    .text("Total Cases");
+    .text("Cases per 10,000");
 
 // Import Dataset
 d3.queue()
@@ -51,6 +51,7 @@ function plotScatter (error, data){
     var incomeCases = data.features;
     const max_income = d3.max(incomeCases.map(function(e){return e.properties.AVG_INC}))
     const max_cases = d3.max(incomeCases.map(function(e){return e.properties.Cases}))
+    const max_cases_percapita = d3.max(incomeCases.map(function(e){return 10000*(e.properties.Cases/e.properties.Population)}))
 
     var x = d3.scaleLinear()
         .domain([0, max_income])
@@ -62,7 +63,8 @@ function plotScatter (error, data){
 
   // Add Y axis
     var y = d3.scaleLinear()
-        .domain([0, max_cases])
+        // .domain([0, max_cases])
+        .domain([0, max_cases_percapita])
         .range([ height, 0]);
   
     svg.append("g")
@@ -76,7 +78,7 @@ function plotScatter (error, data){
     .append("circle")
     .attr('id',(d)=>{return('scatter-'+d.properties.AREA_NAME.replace(/[\W]/g,'-'))})
     .attr("cx", function (d) { return x(d.properties.AVG_INC); } )
-    .attr("cy", function (d) { return y(d.properties.Cases); } )
+    .attr("cy", function (d) { return y(10000*(d.properties.Cases/d.properties.Population)); } )
     .attr("r", 4)
     .style("fill", "#69b3a2")
     .attr("zIndex", 10)
