@@ -1,12 +1,10 @@
 var url_IncomeCasesData = "IncomeCases.json"
 
-
 var margin = {top:30, bottom:30, left:10, right:50}
 var viewboxwidth = 500;
 var viewboxheight = 400
 var width = viewboxwidth - margin.left - margin.right;
 var height = viewboxheight - margin.top - margin.bottom;
-
 
 // Setup graph for Cases per Neighbourhood
 
@@ -87,7 +85,6 @@ function plotScatter (error, data){
     .style("opacity",0.5)
     .on('mouseover',mouseOverScatter)
     .on('mouseout',mouseOutScatter)
-
   
 }
 
@@ -146,17 +143,18 @@ function plotMaps (error, data){
 };
 
 function mouseOverMap(d){
-    d3.select(this)
-    .style('fill','#5858FA')
+    d3.select(this).style('fill','#5858FA')
 
     d3.select("#scatter-"+d.properties.AREA_NAME.replace(/[\W]/g,'-'))
-        .style('fill','#5858FA')
+        .style('fill','red')
 }
 function mouseOutMap(d){
-    d3.select(this)
-    .style("fill", "#69b3a2")
+    d3.select(this).style("fill", "#69b3a2")
     
     d3.select("#scatter-"+d.properties.AREA_NAME.replace(/[\W]/g,'-'))
         .style("fill", "#69b3a2")
+}
 
+function colorByIncome(d){
+    
 }
